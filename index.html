@@ -428,6 +428,118 @@
             width: 100%;
             height: auto;
         }
+
+        /* Bible verse accordions (tap to reveal) */
+        .verse-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px 12px;
+            margin-top: 16px;
+            font-family: var(--ui-font);
+        }
+
+        .verse-toolbar-hint {
+            font-size: 0.8rem;
+            color: var(--muted-color);
+        }
+
+        #btn-toggle-verses {
+            min-height: 40px;
+            padding: 0 14px;
+        }
+
+        .verse-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 8px;
+            margin: 10px 0 6px;
+            font-family: var(--ui-font);
+        }
+
+        .verse-list {
+            margin: -14px 0 24px;
+        }
+
+        .verse-label {
+            flex-basis: 100%;
+            font-size: 0.78rem;
+            color: var(--muted-color);
+            margin-bottom: -2px;
+        }
+
+        .verse-list .verse-group { margin-top: 12px; margin-bottom: 0; }
+
+        .verse > summary {
+            list-style: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 44px;
+            padding: 0 14px;
+            border: 1px solid var(--table-border);
+            border-radius: 999px;
+            background-color: var(--table-bg);
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .verse > summary::-webkit-details-marker { display: none; }
+
+        .verse > summary::before {
+            content: '▸';
+            font-size: 0.75em;
+            transition: transform 0.2s ease;
+        }
+
+        .verse[open] > summary::before { transform: rotate(90deg); }
+
+        .verse > summary:hover { border-color: var(--accent-color); }
+
+        .verse[open] { flex-basis: 100%; }
+
+        .verse[open] > summary {
+            background-color: var(--accent-color-soft);
+            border-color: var(--accent-color);
+        }
+
+        .verse-quote {
+            margin: 8px 0 4px;
+            padding: 14px 16px;
+            background-color: var(--answer-bg);
+            border: 1px solid var(--header-border);
+            border-left: 3px solid var(--accent-color);
+            border-radius: 0 8px 8px 0;
+            font-family: var(--body-font);
+        }
+
+        .verse-text {
+            font-size: 0.95em;
+            line-height: 1.85;
+            word-break: keep-all;
+            color: var(--text-color);
+        }
+
+        .verse-quote cite {
+            display: block;
+            margin-top: 8px;
+            font-family: var(--ui-font);
+            font-style: normal;
+            font-size: 0.78rem;
+            color: var(--muted-color);
+        }
+
+        @media print {
+            header, .stage-nav, .next-stage-btn, .scroll-hint, #btn-toggle-verses { display: none !important; }
+            main { padding-top: 0; }
+        }
     </style>
 </head>
 <body>
@@ -472,6 +584,11 @@
                     맞은편 여리고에 있는 선지자의 제자들이 그를 보며 말하기를 엘리야의 성령이 하시는 역사가 엘리사 위에 머물렀다 하고 가서 그에게로 나아가 땅에 엎드려 그에게 경배하고
                 </div>
 
+                <div class="verse-toolbar">
+                    <span class="verse-toolbar-hint">문단 아래의 성경 구절 버튼을 누르면 본문이 펼쳐집니다.</span>
+                    <button type="button" id="btn-toggle-verses" hidden>구절 모두 펼치기</button>
+                </div>
+
                 <div class="scroll-hint">아래로 스크롤하여 계속 보기 ↓</div>
             </section>
 
@@ -479,7 +596,9 @@
             <section class="stage">
                 <h2>1. 서론: 구약의 역사는 '미리 보는 복음'</h2>
                 <p>구약성경의 역사는 그저 이스라엘이라는 한 민족의 과거 이야기가 아닙니다<span class="bible-ref">(고전 10:11; 히 10:1)</span>. 그것은 장차 오실 예수 그리스도와 그분이 이루실 구원을 미리 보여주는 정교한 예고편(모형론)입니다<span class="bible-ref">(눅 24:27, 44; 요 5:39; 갈 3:24)</span>.</p>
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-01"><summary>눅 24:27</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">이에 모세와 모든 선지자의 글로 시작하여 모든 성경에 쓴 바 자기에 관한 것을 자세히 설명하시니라</div><cite>누가복음 24:27</cite></blockquote></details><details class="verse" id="v-02"><summary>히 10:1</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">율법은 장차 올 좋은 일의 그림자일 뿐이요 참 형상이 아니므로 해마다 늘 드리는 같은 제사로는 나아오는 자들을 언제나 온전하게 할 수 없느니라</div><cite>히브리서 10:1</cite></blockquote></details></div>
                 <p>특히 열왕기 중심에 있는 엘리야와 엘리사의 이야기는 단순히 능력이 많았던 두 선지자의 무용담이 아닙니다<span class="bible-ref">(왕상 17:1–왕하 13:21)</span>. 이들의 사역은 구약의 처음인 모세와 여호수아를 떠오르게 하며<span class="bible-ref">(신 18:15, 18)</span>, 더 나아가 신약의 세례 요한과 예수님이 어떻게 우리를 구원하실지를 완벽하게 보여주는 중요한 연결 고리입니다<span class="bible-ref">(말 4:5–6; 마 11:14; 17:10–13; 눅 1:17; 요 1:29–34)</span>.</p>
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-03"><summary>신 18:15</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">네 하나님 여호와께서 너희 가운데 네 형제 중에서 너를 위하여 나와 같은 선지자 하나를 일으키시리니 너희는 그의 말을 들을지니라</div><cite>신명기 18:15</cite></blockquote></details><details class="verse" id="v-04"><summary>요 1:29</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">이튿날 요한이 예수께서 자기에게 나아오심을 보고 이르되 보라 세상 죄를 지고 가는 하나님의 어린 양이로다</div><cite>요한복음 1:29</cite></blockquote></details></div>
             </section>
 
             <!-- 2단계 -->
@@ -489,15 +608,20 @@
                 
                 <h3>엘리야 = 제2의 모세 (심판과 율법)</h3>
                 <ul>
-                    <li><strong>광야의 기적:</strong> 모세가 광야에서 만나와 메추라기를 먹었듯<span class="bible-ref">(출 16:12–15; 민 11:31–32)</span>, 엘리야도 광야(그릿 시냇가, 로뎀나무)에서 까마귀와 천사가 주는 떡과 고기를 먹었습니다<span class="bible-ref">(왕상 17:2–6; 19:5–8)</span>.</li>
-                    <li><strong>시내산(호렙산) 체험:</strong> 모세가 시내산에서 40일간 하나님을 만났듯<span class="bible-ref">(출 19:16–20; 24:18; 34:28)</span>, 엘리야도 40일을 걸어 호렙산 동굴에 도착해 하나님의 세미한 음성을 들었습니다<span class="bible-ref">(왕상 19:8–13)</span>.</li>
-                    <li><strong>죽음의 신비:</strong> 모세가 모압 땅에서 죽은 뒤 여호와께서 매장하셔서 그 무덤을 아무도 모르는 것처럼<span class="bible-ref">(신 34:5–6)</span>, 엘리야 역시 죽음을 보지 않고 불수레와 회오리바람을 타고 하늘로 올라갔습니다<span class="bible-ref">(왕하 2:11–12)</span>.</li>
+                    <li><strong>광야의 기적:</strong> 모세가 광야에서 만나와 메추라기를 먹었듯<span class="bible-ref">(출 16:12–15; 민 11:31–32)</span>, 엘리야도 광야(그릿 시냇가, 로뎀나무)에서 까마귀가 가져다준 떡과 고기, 천사가 준 떡과 물을 먹었습니다<span class="bible-ref">(왕상 17:2–6; 19:5–8)</span>.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-05"><summary>출 16:15</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">이스라엘 자손이 보고 그것이 무엇인지 알지 못하여 서로 이르되 이것이 무엇이냐 하니 모세가 그들에게 이르되 이는 여호와께서 너희에게 주어 먹게 하신 양식이라</div><cite>출애굽기 16:15</cite></blockquote></details><details class="verse" id="v-06"><summary>왕상 17:6</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">까마귀들이 아침에도 떡과 고기를, 저녁에도 떡과 고기를 가져왔고 그가 시냇물을 마셨으나</div><cite>열왕기상 17:6</cite></blockquote></details></div></li>
+                    <li><strong>시내산(호렙산) 체험:</strong> 모세가 시내산에서 40일간 하나님을 만났듯<span class="bible-ref">(출 19:16–20; 24:18; 34:28)</span>, 엘리야도 40일을 걸어 호렙산 동굴에 도착해 하나님의 세미한 음성을 들었습니다<span class="bible-ref">(왕상 19:8–13)</span>.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-07"><summary>출 24:18</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">모세는 구름 속으로 들어가서 산 위에 올랐으며 모세가 사십 일 사십 야를 산에 있으니라</div><cite>출애굽기 24:18</cite></blockquote></details><details class="verse" id="v-08"><summary>왕상 19:8</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">이에 일어나 먹고 마시고 그 음식물의 힘을 의지하여 사십 주 사십 야를 가서 하나님의 산 호렙에 이르니라</div><cite>열왕기상 19:8</cite></blockquote></details></div></li>
+                    <li><strong>죽음의 신비:</strong> 모세가 모압 땅에서 죽은 뒤 여호와께서 매장하셔서 그 무덤을 아무도 모르는 것처럼<span class="bible-ref">(신 34:5–6)</span>, 엘리야 역시 죽음을 보지 않고 불수레와 회오리바람을 타고 하늘로 올라갔습니다<span class="bible-ref">(왕하 2:11–12)</span>.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-09"><summary>신 34:6</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">벳브올 맞은편 모압 땅에 있는 골짜기에 장사되었고 오늘까지 그의 묻힌 곳을 아는 자가 없느니라</div><cite>신명기 34:6</cite></blockquote></details></div></li>
                 </ul>
                 
                 <h3>엘리사 = 제2의 여호수아 (생명과 은혜)</h3>
                 <ul>
-                    <li><strong>가나안 재정복:</strong> 여호수아가 요단강을 가르고 건너 여리고에서 가나안 정복을 시작했듯<span class="bible-ref">(수 3:14–17; 6:1–21)</span>, 엘리사도 엘리야의 겉옷으로 요단강을 가르고 건너와 첫 기적을 여리고에서 행했습니다<span class="bible-ref">(왕하 2:13–14; 2:19–22)</span>.</li>
-                    <li><strong>저주의 반전:</strong> 여호수아는 정복 후 여리고를 재건하는 자에게 저주를 선포했지만<span class="bible-ref">(수 6:26; 참조: 왕상 16:34)</span>, 엘리사는 죽음과 불임의 물이 흐르던 여리고 샘에 새 그릇의 소금을 뿌려 생명의 물로 치유하고 저주를 해독했습니다<span class="bible-ref">(왕하 2:19–22)</span>.</li>
+                    <li><strong>가나안 재정복:</strong> 여호수아가 요단강을 가르고 건너 여리고에서 가나안 정복을 시작했듯<span class="bible-ref">(수 3:14–17; 6:1–21)</span>, 엘리사도 엘리야의 겉옷으로 요단강을 가르고 건너와 첫 기적을 여리고에서 행했습니다<span class="bible-ref">(왕하 2:13–14; 2:19–22)</span>.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-10"><summary>수 3:17</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">여호와의 언약궤를 멘 제사장들은 요단 가운데 마른 땅에 굳게 섰고 그 모든 백성이 요단을 건너기를 마칠 때까지 모든 이스라엘은 그 마른 땅으로 건너갔더라</div><cite>여호수아 3:17</cite></blockquote></details><details class="verse" id="v-11"><summary>왕하 2:14</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">엘리야의 몸에서 떨어진 그의 겉옷을 가지고 물을 치며 이르되 엘리야의 하나님 여호와는 어디 계시니이까 하고 그도 물을 치매 물이 이리 저리 갈라지고 엘리사가 건너니라</div><cite>열왕기하 2:14</cite></blockquote></details></div></li>
+                    <li><strong>저주의 반전:</strong> 여호수아는 정복 후 여리고를 재건하는 자에게 저주를 선포했지만<span class="bible-ref">(수 6:26; 참조: 왕상 16:34)</span>, 엘리사는 죽음과 불임의 물이 흐르던 여리고 샘에 새 그릇의 소금을 뿌려 생명의 물로 치유하고 저주를 해독했습니다<span class="bible-ref">(왕하 2:19–22)</span>.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-12"><summary>수 6:26</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">여호수아가 그 때에 맹세하게 하여 이르되 누구든지 일어나서 이 여리고 성을 건축하는 자는 여호와 앞에서 저주를 받을 것이라 그 기초를 쌓을 때에 그의 맏아들을 잃을 것이요 그 문을 세울 때에 그의 막내아들을 잃으리라 하였더라</div><cite>여호수아 6:26</cite></blockquote></details><details class="verse" id="v-13"><summary>왕하 2:21</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">엘리사가 물 근원으로 나아가서 소금을 그 가운데에 던지며 이르되 여호와의 말씀이 내가 이 물을 고쳤으니 이로부터 다시는 죽음이나 열매 맺지 못함이 없을지니라 하셨느니라 하니</div><cite>열왕기하 2:21</cite></blockquote></details></div></li>
                 </ul>
             </section>
 
@@ -534,10 +658,15 @@
                         </tbody>
                     </table>
                 </div>
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><span class="verse-label">세례 요한과 예수님의 선포</span><details class="verse" id="v-14"><summary>마 3:2</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">회개하라 천국이 가까이 왔느니라 하였으니</div><cite>마태복음 3:2</cite></blockquote></details><details class="verse" id="v-15"><summary>막 1:15</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">이르시되 때가 찼고 하나님의 나라가 가까이 왔으니 회개하고 복음을 믿으라 하시더라</div><cite>마가복음 1:15</cite></blockquote></details></div>
                 
                 <ul>
-                    <li><strong>세례 요한 (오리라 한 엘리야):</strong> 요한은 엘리야처럼 털옷을 입고 가죽 띠를 띠며<span class="bible-ref">(왕하 1:8; 마 3:4; 막 1:6)</span>, 광야에서 배교한 시대를 향해 강력한 회개와 심판을 선포했습니다<span class="bible-ref">(말 4:5–6; 마 3:7–12; 눅 3:7–9)</span>. 예수님께서도 세례 요한을 가리켜 "오리라 한 엘리야가 곧 이 사람이니라"<span class="bible-ref">(마 11:14; 17:10–13; 막 9:11–13; 눅 1:17)</span>고 명백하게 확증하셨습니다.</li>
-                    <li><strong>예수님 (위대한 엘리사):</strong> 세례 요한이 옥에 갇혀 퇴장한 후<span class="bible-ref">(마 4:12–17; 막 1:14–15)</span>, 예수님은 엘리사처럼 삶의 현장 한가운데로 들어가셔서 병자를 고치시고, 굶주린 자를 먹이시며, 죽은 자를 살리시는 은혜를 베푸셨습니다<span class="bible-ref">(마 9:35; 눅 7:11–17; 요 6:1–15)</span>. '예수(Yēšûaʿ)'와 '여호수아(Yəhôšūaʿ)', '엘리사(ʾĔlîšāʿ)'는 모두 "여호와/하나님이 구원하신다"라는 동일한 어원적 어근(y-š-ʿ)과 의미를 공유합니다<span class="bible-ref">(마 1:21; 눅 1:31)</span>.</li>
+                    <li><strong>세례 요한 (오리라 한 엘리야):</strong> 요한은 엘리야처럼 털옷을 입고 가죽 띠를 띠며<span class="bible-ref">(왕하 1:8; 마 3:4; 막 1:6)</span>, 광야에서 배교한 시대를 향해 강력한 회개와 심판을 선포했습니다<span class="bible-ref">(말 4:5–6; 마 3:7–12; 눅 3:7–9)</span>. 예수님께서도 세례 요한을 가리켜 "오리라 한 엘리야가 곧 이 사람이니라"<span class="bible-ref">(마 11:14; 17:10–13; 막 9:11–13; 눅 1:17)</span>고 명백하게 확증하셨습니다.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-16"><summary>마 11:14</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">만일 너희가 즐겨 받을진대 오리라 한 엘리야가 곧 이 사람이니라</div><cite>마태복음 11:14</cite></blockquote></details><details class="verse" id="v-17"><summary>눅 1:17</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">그가 또 엘리야의 심령과 능력으로 주 앞에 먼저 와서 아버지의 마음을 자식에게, 거스르는 자를 의인의 슬기에 돌아오게 하고 주를 위하여 세운 백성을 준비하리라</div><cite>누가복음 1:17</cite></blockquote></details></div></li>
+                    <li><strong>예수님 (위대한 엘리사):</strong> 세례 요한이 옥에 갇혀 퇴장한 후<span class="bible-ref">(마 4:12–17; 막 1:14–15)</span>, 예수님은 엘리사처럼 삶의 현장 한가운데로 들어가셔서 병자를 고치시고, 굶주린 자를 먹이시며, 죽은 자를 살리시는 은혜를 베푸셨습니다<span class="bible-ref">(마 9:35; 눅 7:11–17; 요 6:1–15)</span>.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-18"><summary>마 4:12</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">예수께서 요한이 잡혔음을 들으시고 갈릴리로 물러가셨다가</div><cite>마태복음 4:12</cite></blockquote></details><details class="verse" id="v-19"><summary>눅 7:16</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">모든 사람이 두려워하며 하나님께 영광을 돌려 이르되 큰 선지자가 우리 가운데 일어나셨다 하고 또 하나님께서 자기 백성을 돌보셨다 하더라</div><cite>누가복음 7:16</cite></blockquote></details></div>
+                    '예수(Yēšûaʿ)'와 '여호수아(Yəhôšūaʿ)', '엘리사(ʾĔlîšāʿ)'는 모두 "여호와/하나님이 구원하신다"라는 동일한 어원적 어근(y-š-ʿ)과 의미를 공유합니다<span class="bible-ref">(마 1:21; 눅 1:31)</span>.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-20"><summary>마 1:21</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">아들을 낳으리니 이름을 예수라 하라 이는 그가 자기 백성을 그들의 죄에서 구원할 자이심이라 하니라</div><cite>마태복음 1:21</cite></blockquote></details></div></li>
                 </ul>
             </section>
 
@@ -568,11 +697,17 @@
                                 <td><strong>나인성 과부의 아들과 나사로를 살림<span class="bible-ref">(눅 7:11–17; 요 11:25–26, 43–44)</span></strong><br>("나는 부활이요 생명이니..." 사망의 권세를 깨뜨리심)</td>
                             </tr>
                             <tr>
-                                <td><strong>과부의 빚을 대신 갚아줌 (고엘) <span class="bible-ref">(출 22:9–14; 왕하 4:1–7)</span></strong></td>
-                                <td><strong>십자가의 피로 우리의 죄 빚을 갚아주심<span class="bible-ref">(엡 1:7; 골 2:14; 히 9:12)</span></strong><br>(사탄의 노예였던 우리를 영원히 구원하심)</td>
+                                <td><strong>과부가 빚을 갚을 길을 기름의 기적으로 열어 줌 <span class="bible-ref">(왕하 4:1–7)</span></strong></td>
+                                <td><strong>십자가의 피로 우리의 죄 빚을 갚아주심<span class="bible-ref">(엡 1:7; 골 2:14; 히 9:12)</span></strong><br>(사탄의 노예였던 우리를 영원히 구원하심)<br>(엘리사는 갚을 길을 열어 주었고, 예수님은 우리 대신 갚으셨습니다)</td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="verse-list">
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><span class="verse-label">보리떡</span><details class="verse" id="v-21"><summary>왕하 4:42–44</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">한 사람이 바알 살리사에서부터 와서 처음 만든 떡 곧 보리떡 이십 개와 또 자루에 담은 채소를 하나님의 사람에게 드린지라 그가 이르되 무리에게 주어 먹게 하라 그 사환이 이르되 내가 어찌 이것을 백 명에게 주겠나이까 하나 엘리사는 또 이르되 무리에게 주어 먹게 하라 여호와의 말씀이 그들이 먹고 남으리라 하셨느니라 그가 그들 앞에 주었더니 여호와께서 말씀하신 대로 먹고 남았더라</div><cite>열왕기하 4:42–44</cite></blockquote></details><details class="verse" id="v-22"><summary>요 6:9</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">여기 한 아이가 있어 보리떡 다섯 개와 물고기 두 마리를 가지고 있나이다 그러나 그것이 이 많은 사람에게 얼마나 되겠사옵나이까</div><cite>요한복음 6:9</cite></blockquote></details></div>
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><span class="verse-label">나아만의 나병</span><details class="verse" id="v-23"><summary>왕하 5:14</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">나아만이 이에 내려가서 하나님의 사람의 말대로 요단 강에 일곱 번 몸을 잠그니 그의 살이 어린 아이의 살 같이 회복되어 깨끗하게 되었더라</div><cite>열왕기하 5:14</cite></blockquote></details><details class="verse" id="v-24"><summary>눅 4:27</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">또 선지자 엘리사 때에 이스라엘에 많은 나병환자가 있었으되 그 중의 한 사람도 깨끗함을 얻지 못하고 오직 수리아 사람 나아만뿐이었느니라</div><cite>누가복음 4:27</cite></blockquote></details></div>
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><span class="verse-label">수넴 여인의 아들</span><details class="verse" id="v-25"><summary>왕하 4:35</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">엘리사가 내려서 집 안에서 한 번 이리 저리 다니고 다시 아이 위에 올라 엎드리니 아이가 일곱 번 재채기 하고 눈을 뜨는지라</div><cite>열왕기하 4:35</cite></blockquote></details><details class="verse" id="v-26"><summary>요 11:25</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">예수께서 이르시되 나는 부활이요 생명이니 나를 믿는 자는 죽어도 살겠고</div><cite>요한복음 11:25</cite></blockquote></details></div>
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><span class="verse-label">과부의 기름</span><details class="verse" id="v-27"><summary>왕하 4:7</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">그 여인이 하나님의 사람에게 나아가서 말하니 그가 이르되 너는 가서 기름을 팔아 빚을 갚고 남은 것으로 너와 네 두 아들이 생활하라 하였더라</div><cite>열왕기하 4:7</cite></blockquote></details><details class="verse" id="v-28"><summary>골 2:14</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">우리를 거스르고 불리하게 하는 법조문으로 쓴 증서를 지우시고 제하여 버리사 십자가에 못 박으시고</div><cite>골로새서 2:14</cite></blockquote></details></div>
                 </div>
             </section>
 
@@ -580,9 +715,12 @@
             <section class="stage">
                 <h2>5. 결론: 은혜의 왕, 예수 그리스도</h2>
                 <ul>
-                    <li><strong>율법에서 은혜로의 완성</strong>: 구약의 모세와 엘리야, 신약의 세례 요한이 선포한 율법과 회개의 메시지<span class="bible-ref">(출 20:1–17; 왕상 18:37; 마 3:2)</span>는, 여호수아와 엘리사, 그리고 예수 그리스도를 통해 생명과 은혜의 복음으로 완전하게 열매 맺었습니다<span class="bible-ref">(요 1:17; 롬 8:1–2)</span>.</li>
-                    <li><strong>참된 왕이신 그리스도를 바라봄</strong>: 인간 왕들의 배도와 실패 속에서도<span class="bible-ref">(왕상 16:30–33; 왕하 17:7–23)</span>, 하나님은 오직 당신의 종들을 통해 언약 백성을 보존하셨습니다<span class="bible-ref">(왕상 19:18; 왕하 13:22–25)</span>.</li>
-                    <li>우리는 십자가와 부활로 온전한 구원을 완수하신 참된 왕 예수 그리스도만을 의지하며<span class="bible-ref">(고전 15:3–4; 히 12:2)</span>, 그분의 은혜 안에서 하나님 나라 백성으로 살아갑니다<span class="bible-ref">(엡 2:8–10; 벧전 2:9)</span>.</li>
+                    <li><strong>율법에서 은혜로의 완성</strong>: 구약의 모세와 엘리야, 신약의 세례 요한이 선포한 율법과 회개의 메시지<span class="bible-ref">(출 20:1–17; 왕상 18:37; 마 3:2)</span>는, 여호수아와 엘리사, 그리고 예수 그리스도를 통해 생명과 은혜의 복음으로 완전하게 열매 맺었습니다<span class="bible-ref">(요 1:17; 롬 8:1–2)</span>.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-29"><summary>요 1:17</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">율법은 모세로 말미암아 주어진 것이요 은혜와 진리는 예수 그리스도로 말미암아 온 것이라</div><cite>요한복음 1:17</cite></blockquote></details><details class="verse" id="v-30"><summary>롬 8:1</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">그러므로 이제 그리스도 예수 안에 있는 자에게는 결코 정죄함이 없나니</div><cite>로마서 8:1</cite></blockquote></details></div></li>
+                    <li><strong>참된 왕이신 그리스도를 바라봄</strong>: 인간 왕들의 배도와 실패 속에서도<span class="bible-ref">(왕상 16:30–33; 왕하 17:7–23)</span>, 하나님은 오직 당신의 종들을 통해 언약 백성을 보존하셨습니다<span class="bible-ref">(왕상 19:18; 왕하 13:22–25)</span>.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-31"><summary>왕상 19:18</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">그러나 내가 이스라엘 가운데에 칠천 명을 남기리니 다 바알에게 무릎을 꿇지 아니하고 다 바알에게 입맞추지 아니한 자니라</div><cite>열왕기상 19:18</cite></blockquote></details><details class="verse" id="v-32"><summary>왕하 13:23</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">여호와께서 아브라함과 이삭과 야곱과 더불어 세우신 언약 때문에 이스라엘에게 은혜를 베풀며 그들을 불쌍히 여기시며 돌보사 멸하기를 즐겨하지 아니하시고 이 때까지 자기 앞에서 쫓아내지 아니하셨더라</div><cite>열왕기하 13:23</cite></blockquote></details></div></li>
+                    <li>우리는 십자가와 부활로 온전한 구원을 완수하신 참된 왕 예수 그리스도만을 의지하며<span class="bible-ref">(고전 15:3–4; 히 12:2)</span>, 그분의 은혜 안에서 하나님 나라 백성으로 살아갑니다<span class="bible-ref">(엡 2:8–10; 벧전 2:9)</span>.
+                    <div class="verse-group" role="group" aria-label="이 문단의 핵심 성경 구절"><details class="verse" id="v-33"><summary>히 12:2</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">믿음의 주요 또 온전하게 하시는 이인 예수를 바라보자 그는 그 앞에 있는 기쁨을 위하여 십자가를 참으사 부끄러움을 개의치 아니하시더니 하나님 보좌 우편에 앉으셨느니라</div><cite>히브리서 12:2</cite></blockquote></details><details class="verse" id="v-34"><summary>엡 2:8–9</summary><blockquote class="verse-quote" lang="ko"><div class="verse-text">너희는 그 은혜에 의하여 믿음으로 말미암아 구원을 받았으니 이것은 너희에게서 난 것이 아니요 하나님의 선물이라 행위에서 난 것이 아니니 이는 누구든지 자랑하지 못하게 함이라</div><cite>에베소서 2:8–9</cite></blockquote></details></div></li>
                 </ul>
             </section>
 
@@ -596,7 +734,7 @@
                     <div class="answer-save-status" id="status-q1" aria-live="polite"></div>
                 </div>
                 <div class="question-block">
-                    <p><strong>Q2.</strong> 엘리사가 빚진 과부의 빚을 갚아주었듯, 예수님은 십자가에서 우리의 모든 죄 빚을 완전히 갚아주셨습니다. 이 '은혜'를 생각할 때, 지금 내 삶에서 두려워하거나 얽매여 있는 것은 무엇이며 어떻게 자유를 누릴 수 있을까요?</p>
+                    <p><strong>Q2.</strong> 엘리사가 빚진 과부에게 기름의 기적으로 빚을 갚을 길을 열어 주었듯, 예수님은 십자가에서 우리의 모든 죄 빚을 완전히 갚아주셨습니다. 이 '은혜'를 생각할 때, 지금 내 삶에서 두려워하거나 얽매여 있는 것은 무엇이며 어떻게 자유를 누릴 수 있을까요?</p>
                     <label class="answer-label" for="answer-q2">나의 답변</label>
                     <textarea class="answer-box" id="answer-q2" placeholder="이곳에 나의 생각을 적어보세요..."></textarea>
                     <div class="answer-save-status" id="status-q2" aria-live="polite"></div>
@@ -749,6 +887,34 @@
                     if (status) status.textContent = '';
                 }
             });
+        });
+
+        // --- Bible verse accordions: expand/collapse all + expand on print ---
+        const verseEls = Array.from(document.querySelectorAll('details.verse'));
+        const btnToggleVerses = document.getElementById('btn-toggle-verses');
+
+        if (btnToggleVerses && verseEls.length) {
+            const refreshVerseButton = () => {
+                const allOpen = verseEls.every((d) => d.open);
+                btnToggleVerses.textContent = allOpen ? '구절 모두 접기' : '구절 모두 펼치기';
+            };
+            btnToggleVerses.hidden = false;
+            btnToggleVerses.addEventListener('click', () => {
+                const openAll = !verseEls.every((d) => d.open);
+                verseEls.forEach((d) => { d.open = openAll; });
+                refreshVerseButton();
+            });
+            verseEls.forEach((d) => d.addEventListener('toggle', refreshVerseButton));
+        }
+
+        let versesOpenedForPrint = [];
+        window.addEventListener('beforeprint', () => {
+            versesOpenedForPrint = verseEls.filter((d) => !d.open);
+            versesOpenedForPrint.forEach((d) => { d.open = true; });
+        });
+        window.addEventListener('afterprint', () => {
+            versesOpenedForPrint.forEach((d) => { d.open = false; });
+            versesOpenedForPrint = [];
         });
     </script>
 </body>
